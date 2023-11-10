@@ -44,9 +44,9 @@ LightdmUbuntu(){
         value=${values[i]}
         #checks if the the settings exist
             if grep -q "^$setting=" "$config_file"; then
-            #if it exists, changes the value to what it should be
-            sed -i "s/^$setting=.*/$setting=$value/" "$config_file"
-            echo "Value for setting '$setting' updated in the config file"
+                #if it exists, changes the value to what it should be
+                sed -i "s/^$setting=.*/$setting=$value/" "$config_file"
+                echo "Value for setting '$setting' updated in the config file"
             else
                 #if the setting doesnt exist add the new setting and coresponding value
                 echo "$setting=$value" >> "$config_file"
@@ -87,6 +87,7 @@ main_menu() {
 
         5)
             LightdmUbuntu
+            pause 2
             ;;
         6)
             echo "Exiting program."
