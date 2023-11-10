@@ -10,24 +10,26 @@ Update(){
     sudo reboot
 }
 
-Clamtk() {
+Clam() {
     echo "Installing Clamtk and running scan"
     sudo apt-get -y install clamtk
-    sudo freshclam
+    sleep 5
+    sudo clamtk
 
 }
 
 
-placeholder1() {
-    echo "placeholder"
+chkprohib() {
+    read -p "Enter a file extention to search for: " ext_user_inpt
+    find / -type f -name "*.$ext_user_inpt"
 }
 
 main_menu() {
     clear
     echo "Select an option:"
     echo "1. Update and restart"
-    echo "2. Another Task"
-    echo "3. Different Task"
+    echo "2. clamtk"
+    echo "3. Auto-update(consider GUI)"
     echo "4. Exit"
 
     read -p "Enter the number corresponding to your choice: " choice
@@ -37,10 +39,11 @@ main_menu() {
             Update
             ;;
         2)
-            Clamtk
+            Clam
             ;;
         3)
-            placeholder1
+            chkprohib
+            exit
             ;;
         4)
             echo "Exiting program."
