@@ -1,5 +1,5 @@
 #!/bin/bash
-update_and_restart(){
+Update(){
 
     echo "Updating and Installing"
     sudo apt-get update
@@ -10,9 +10,11 @@ update_and_restart(){
     sudo reboot
 }
 
-placeholder() {
+Clamtk() {
+    echo "Installing Clamtk and running scan"
+    sudo apt-get -y install clamtk
+    sudo freshclam
 
-    echo "placeholder"
 }
 
 
@@ -32,10 +34,10 @@ main_menu() {
 
     case $choice in
         1)
-            update_and_restart
+            Update
             ;;
         2)
-            placeholder
+            Clamtk
             ;;
         3)
             placeholder1
