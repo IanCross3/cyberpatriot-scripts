@@ -51,11 +51,13 @@ LightdmUbuntu(){
                 #if the setting doesnt exist add the new setting and coresponding value
                 echo "$setting=$value" >> "$config_file"
                 echo "New setting '$setting' appended to the config file"
+                
             fi
         done
     else
         echo "Config file not found"
     fi
+    sleep 5
 }
 
 main_menu() {
@@ -87,7 +89,6 @@ main_menu() {
 
         5)
             LightdmUbuntu
-            pause 2
             ;;
         6)
             echo "Exiting program."
