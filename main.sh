@@ -145,37 +145,42 @@ CreateMisUsrs(){
 }
 
 AddRemoveAdmin(){
-    declare -a admin_users=()
+    declare -A admin_users=()
 
     while true; do
-        read -p "Enter a username to remove admin access or type 'done': "
+        read -p "Enter a username with administrative access (or type 'done' to finish): " username
 
+        # Check if the user wants to finish
         if [ "$username" == "done" ]; then
             break
         fi
 
-        admin_users+=("username")
+        admin_users["$username"]=1
     done
 
-    #gets the list of all users with sudo access
+    # Get a list of all current users with sudo access
     current_sudo_users=$(getent group sudo | cut -d: -f4)
 
-    #loops through and removes unauthorized users
+    # Loop through current sudo users and remove sudo access if not in the provided list
     for user in $current_sudo_users; do
-        if [[ " ${admin_users[@]} " =~ " ${user} "]]; then
-            echo "Removed sudo access for '$user'."
+        if [ -n "${admin_users[$user]}" ]; then
+            echo "User '$user' remains an administrator."
+        else
+            sudo deluser "$user" sudo
+            echo "Removed sudo access for user '$user'."
         fi
     done
 
-    for user in "${admin_users[@]}"; do
+    # Add sudo access for users in the provided list who don't have it
+    for user in "${!admin_users[@]}"; do
         if sudo id "$user" &>/dev/null; then
             echo "User '$user' already has sudo access."
         else
             sudo adduser "$user" sudo
-            echo "Sudo access for '$user' added'"
+            echo "Added sudo access for user '$user'."
         fi
     done
-    sleep 5
+}
 }
 
 Changepass(){
