@@ -181,7 +181,6 @@ AddRemoveAdmin(){
         fi
     done
 }
-}
 
 Changepass(){
     read -s -p "Enter new password for all users: " new_password
